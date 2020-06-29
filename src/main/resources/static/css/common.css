@@ -1,0 +1,49 @@
+.welcome {
+    height: 100px;
+    background-color: #f2f2f2;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.content {
+    padding: 10px;
+}
+
+.crawl {
+    padding: 30px 200px 20px 40px;
+}
+
+.crawl .start {
+    margin-left: 300px;
+}
+
+.crawl table td {
+    height: 50px;
+}
+
+.analysis {
+    padding: 20px 0px;
+}
+.result_pie{
+    padding-left: 80px;
+    padding-top: 3px;
+}
+
+#pieChart {
+    height: 300px;
+    width: 600px;
+}
+
+a.bar-btn {
+    color: #FFFFFF;
+}
+
+button.btn-add {
+    display: inline-flex;
+
+}
+
+

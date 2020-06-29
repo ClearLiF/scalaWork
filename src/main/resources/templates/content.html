@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/common.css"/>
+    <script src="/js/echarts.min.js" type="application/javascript"></script>
+    <script src="/js/common.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:fragment="user">
+    <div class="user">
+        <div class="jumbotron">
+            <h1>用户名:<div th:text="${session.username}"></div></h1>
+            <p>...</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        </div>
+<!--        <form id="crawl-form">-->
+<!--            <table class="form-group">-->
+<!--                <tr>-->
+<!--                    <td>用户基本信息：</td>-->
+<!--                    <td>-->
+
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr >-->
+<!--                    <td>用户名</td>-->
+<!--                    <td><div th:text="${session.username}"></div></td>-->
+
+<!--                </tr>-->
+
+
+<!--            </table>-->
+<!--        </form>-->
+
+    </div>
+</div>
+<div th:fragment="attends">
+    <table id="comment_table" lay-filter="comment_table"></table>
+    <script type="text/html" id="bar_left">
+        <button class="layui-btn layui-btn-sm btn-add" lay-event="add_comment">
+            <i class="layui-icon layui-icon-add-1"></i>
+            添加一条数据
+        </button>
+        <button class="layui-btn layui-btn-sm btn-add" lay-event="generator_model">
+            <i class="layui-icon layui-icon-upload-drag"></i>
+            提交模型生成任务
+        </button>
+    </script>
+    <script type="text/html" id="bar_right">
+        {{#  if(d.type === 2){ }}
+        <a class="layui-btn layui-btn-xs bar-btn" lay-event="edit">关注</a>
+        {{#  } }}
+        {{#  if(d.type === 1){ }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs bar-btn" lay-event="del">取关</a>
+        {{#  } }}
+    </script>
+</div>
+<div th:fragment="fans">
+    <table id="comment_table2" lay-filter="comment_table"></table>
+</div>
+</body>
+</html>
