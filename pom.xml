@@ -128,6 +128,7 @@
       <artifactId>spark-streaming_${scala.version}</artifactId>
       <version>${spark.version}</version>
     </dependency>
+
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
