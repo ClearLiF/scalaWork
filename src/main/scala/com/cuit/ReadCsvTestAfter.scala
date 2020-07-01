@@ -3,9 +3,7 @@ package com.cuit
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
-import scala.collection.mutable.ArrayBuffer
-
-object ReadCsvTest {
+object ReadCsvTestAfter {
 
   def main(args: Array[String]): Unit = {
     getMovieInfo("Popcorn (2007)")
@@ -13,16 +11,18 @@ object ReadCsvTest {
   def getMovieInfo(movieName: String):String = {
     val spark = SparkSession
       .builder()
+
       .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
       .master("spark://master:7077")
      // .master("spark://master:7077")
-      .appName("ReadCsvTest3")
-     .config("spark.sql.codegen.wholeStage", false)
+      .config("spark.sql.codegen.wholeStage", false)
+      .appName("ReadCsvTest4")
+      .config("spark.sql.codegen.wholeStage", false)
       .config("spark.network.timeout",120)
       .config("spark.dynamicAllocation.enabled",false)
       .config("spark.driver.host","hostip") //指定driver 的hosts-name
      // .config("spark.driver.extraClassPath","/root/scalaWork-1.0-SNAPSHOT.jar")
-      .config("spark.driver.port","9894")//指定driver的服务端口
+      .config("spark.driver.port","9896")//指定driver的服务端口
       .getOrCreate
 //    val sc: SparkContext = spark.sparkContext
 //    sc.setLogLevel("ERROR")
@@ -44,7 +44,7 @@ object ReadCsvTest {
     println("请输入：")
     //    var movieName = StdIn.readLine()
     val filter_rdd = df.rdd.filter(i => i.getAs[String](1).equals(movieName)||
-            i.getAs[String](1).contains(movieName))
+            i.getAs[String](1).matches(".*"+movieName))
     var temp=null
     var list =Set[String]()
     var maps:Map[String,String] = Map()
