@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuit.generate.TempDao">
+  <resultMap id="BaseResultMap" type="com.cuit.mapper.Temp">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="people" jdbcType="VARCHAR" property="people" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, people
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from temp
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectSize" resultType="java.lang.Integer">
+      select  count(*)
+        from temp
+    </select>
+  <select id="selectPage" resultType="com.cuit.mapper.Temp">
+    select
+    <include refid="Base_Column_List"/>
+    from temp
+    limit #{begin},#{size}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from temp
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cuit.mapper.Temp" useGeneratedKeys="true">
+    insert into temp (`name`, people)
+    values (#{name,jdbcType=VARCHAR}, #{people,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cuit.mapper.Temp" useGeneratedKeys="true">
+    insert into temp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="people != null">
+        people,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="people != null">
+        #{people,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cuit.mapper.Temp">
+    update temp
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="people != null">
+        people = #{people,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cuit.mapper.Temp">
+    update temp
+    set `name` = #{name,jdbcType=VARCHAR},
+      people = #{people,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
