@@ -1,7 +1,21 @@
 $(function () {
     layui.use('element')
-    loadTable()
-    loadTable2()
+    var layer = null
+    var form = null;
+
+    layui.use('layer', function () {
+        layer = layui.layer;
+
+    });
+
+    //loadTable()
+    //loadTable2()
+    //layer.msg("spark任务已完成！", {icon: 1})
+    $('#crawl-form').submit(function () {
+            startCrawler()
+            return false;
+        }
+    )
     // $('#crawl-form').submit(function () {
     //         startCrawler()
     //         return false;
@@ -11,84 +25,39 @@ $(function () {
 })
 
 function startCrawler() {
-    let num = $('#crawl_num').val();
     let k = $('#search_key').val();
-    if (num > 0 && num <= 300) {
-        $('#btn_crawl').attr('disabled')
-        $('#btn_crawl').addClass('layui-btn-disabled')
-        $('#btn_crawl').text("爬取任务正在进行中...")
-        $('#craw-status-div').collapse('show')
-        $.get('crawler/get?num=' + num + '&keyword=' + k,
-            function () {
-                crawlerStatusListening()
-            })
-    } else {
-        if (num > 300) {
-            layer.msg("当前爬取条数上限为每一类300条！！！", {icon: 5})
-        } else {
-            layer.msg("评论爬取数量非法！！！", {icon: 5})
-        }
-    }
-
-
-}
-
-function crawlerStatusListening() {
-    let timer = setInterval(function () {
-        $.get('crawler/status', function (res) {
-            let data = res.data;
-            $("#status").text(data.status)
-            $("#currType").text(data.currType)
-            let pcurr = data.currCrawlNum / data.crawlNum;
-            let pall = data.typeProgress / 3 + pcurr / 3;
-            layui.element.progress('progress-curr', toPercent(pcurr));
-            layui.element.progress('progress-all', toPercent(pall));
-            if (data.running == false) {
-                clearInterval(timer);
-                $('#craw-status-div').collapse('hide')
-                layer.msg("爬取任务已完成！", {icon: 1})
-                $('#btn_crawl').removeAttr('disabled')
-                $('#btn_crawl').removeClass('layui-btn-disabled')
-                $('#btn_crawl').text("开始爬取")
-            }
-        })
-    }, 300);
-}
-
-
-function getCrawlerStatus() {
-    $.get('crawler/status', function (res) {
-        if (res.data.running == true) {
-            $('#btn_crawl').text("爬取任务正在进行中...")
-            $('#craw-status-div').collapse('show')
-            crawlerStatusListening()
-        } else {
+    let type = $('#selectValue').val();
+    $('#btn_crawl').attr('disabled')
+    $('#btn_crawl').addClass('layui-btn-disabled')
+    $('#btn_crawl').text("爬取任务正在进行中...")
+    $.post('/spark', {
+            content: k,
+            type:type
+        },
+        function (data) {
+            //layer.msg(data.code, {icon: 6})
+            layer.msg("spark任务已完成！", {icon: 1})
             $('#btn_crawl').removeAttr('disabled')
             $('#btn_crawl').removeClass('layui-btn-disabled')
-            $('#btn_crawl').text("开始爬取")
-        }
-    })
+            $('#btn_crawl').text("提交")
+            $(".layui-laypage-btn").click();
+            loadTable()
+        })
+
 }
 
-function toPercent(point) {
-    if (point <= 0) {
-        return '0%';
-    }
-    if (point > 1) {
-        return '100%'
-    }
-    var str = Number(point * 100).toFixed();
-    str += "%";
-    return str;
-}
+
+
+
+
 
 
 function loadTable() {
     layui.use('table', function () {
         var table = layui.table;
         table.render({
-            elem: '#comment_table'
-            , title: '微博用户'
+            elem: '#comment_table0'
+            , title: 'spark'
             , height: 'full-250'
             , url: '/byPage' //数据接口
             , request: {
@@ -107,23 +76,10 @@ function loadTable() {
             }
             , cols: [[ //表头
                 {field: 'id', title: 'ID', width: 70, sort: true, fixed: 'left'}
-                , {field: 'name', title: '用户名', width: 1150}
+                , {field: 'name', title: '电影名', width: 1150}
                 , {
-                    field: 'type', title: '是否关注', width: 120, sort: true,
-                    templet: function (res) {
-                        let str
-                        switch (res.type) {
-                            case 2:
-                                str = '未关注';
-                                break;
-                            case 1:
-                                str = '已关注';
-                                break;
-                            default:
-                                str = res.type;
-                        }
-                        return str;
-                    }
+                    field: 'people', title: '演员', width: 120, sort: true,
+
                 }
                 , {fixed: 'right', title: '操作', toolbar: '#bar_right', width: 120}
             ]]

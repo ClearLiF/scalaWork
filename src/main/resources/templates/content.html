@@ -4,23 +4,42 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/js/jquery-3.4.1.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/echarts.min.js" type="application/javascript"></script>
+    <script src="/layui/layui.all.js" type="application/javascript"></script>
     <script src="/js/common.js" type="application/javascript"></script>
+    <script src="/js/analysis.js" type="application/javascript"></script>
 </head>
 <body>
-<div th:fragment="user">
-    <div class="user">
-        <div class="jumbotron">
-            <h1>用户名:<div th:text="${session.username}"></div></h1>
-            <p>...</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-        </div>
-
-    </div>
+<div th:fragment="prematch">
+    <form id="crawl-form" >
+        <table class="form-group">
+            <tr>
+                <td>数据爬取目标：</td>
+                <td>
+                    <select id="selectValue" class="form-control form-control-sm">
+                        <option value="1">前匹配</option>
+                        <option value="2">后匹配</option>
+                        <option value="3">模糊查询</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>搜索关键词：</td>
+                <td>
+                    <input class="form-control form-control-sm" type="text" id="search_key"
+                           placeholder="如“手机”、“电脑”..." required>
+                </td>
+            </tr>
+        </table>
+        <button id="btn_crawl" type="submit" class="layui-btn start">提交</button>
+    </form>
+      <table id="comment_table0" lay-filter="comment_table"></table>
 </div>
-<div th:fragment="attends">
+<div th:fragment="postmatch">
     <table id="comment_table" lay-filter="comment_table"></table>
     <script type="text/html" id="bar_left">
         <button class="layui-btn layui-btn-sm btn-add" lay-event="add_comment">
@@ -41,7 +60,7 @@
         {{#  } }}
     </script>
 </div>
-<div th:fragment="fans">
+<div th:fragment="query">
     <table id="comment_table2" lay-filter="comment_table"></table>
 </div>
 </body>

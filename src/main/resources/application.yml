@@ -1,5 +1,84 @@
 server:
-  port: 8080
+  port: 28080
+mybatis:
+  mapper-locations: classpath*:generator/*.xml
+  type-aliases-package: com.cuit.com.cuit.generate
+spring:
+#  redis:
+#    host: 47.94.18.106 #哨兵模式下不用配置
+#    port: 6379 # 哨兵模式下不用配置
+#    password: lq18512863192
+#    timeout: 10000
+#    lettuce:
+#      pool:
+#        #最大连接数
+#        max-active: 1024
+#        #最大阻塞等待时间(负数表示没限制)
+#        max-wait: 20000
+#        #最大空闲
+#        max-idle: 200
+#        #最小空闲
+#        min-idle: 10
+  #    sentinel:
+  #      master: mymaster
+  #      nodes: 47.94.18.106:26379,111.230.203.6:26379
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
+      #添加后，redis中的key为spring:session:myproject
+      namespace: myproject
+  datasource:
+    url: jdbc:mysql://123.56.125.48:3306/commentanalysis?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: mrli
+    password: Liqi@233526
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化大小
+      initialSize: 5
+      #最小值
+      minIdle: 5
+      #最大值
+      maxActive: 20
+      #最大等待时间，配置获取连接等待超时，时间单位都是毫秒ms
+      maxWait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接
+      timeBetweenEvictionRunsMillis: 60000
+      #配置一个连接在池中最小生存的时间
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，
+      #'wall'用于防火墙，SpringBoot中没有log4j，我改成了log4j2
+      #filters: stat,wall,log4j2
+      filter:
+        log4j:
+          enabled: true
+          statement-create-after-log-enabled: false
+          statement-log-enabled: false
+          statement-executable-sql-log-enable: true
+          statement-log-error-enabled: true
+          result-set-log-enabled: false
+      #最大PSCache连接
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      # 配置StatFilter
+      web-stat-filter:
+        #默认为false，设置为true启动
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+# 打印sql
 logging:
   level:
     root: info
+    ssm.app.mapper: info
+    druid:
+      sql.Statement: info
+

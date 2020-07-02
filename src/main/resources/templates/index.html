@@ -16,28 +16,28 @@
 <body>
 <div class="container-fluid">
     <div class="welcome border  rounded">
-        <div>微博系统</div>
+        <div>spark系统</div>
     </div>
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link" th:classappend="${content eq 'prematch'}?'active'" href="/index">用户基本信息</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${content eq 'postmatch'}?'active'" href="/attends">关注</a>
+            <a class="nav-link" th:classappend="${content eq 'postmatch'}?'active'" href="/attends">待开发</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${content eq 'query'}?'active'" href="/fans">粉丝</a>
+            <a class="nav-link" th:classappend="${content eq 'query'}?'active'" href="/fans">待开发</a>
         </li>
     </ul>
     <div class="content border border-top-0">
         <div th:if="${content} == 'prematch'">
-            <div th:replace="content :: user"></div>
+            <div th:replace="content :: prematch"></div>
         </div>
         <div th:if="${content} == 'postmatch'">
-            <div th:replace="content :: attends"></div>
+            <div th:replace="content :: postmatch"></div>
         </div>
         <div th:if="${content} == 'query'">
-            <div th:replace="content :: fans"></div>
+            <div th:replace="content :: query"></div>
         </div>
     </div>
 </div>

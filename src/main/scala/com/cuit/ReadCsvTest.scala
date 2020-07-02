@@ -13,7 +13,8 @@ object ReadCsvTest {
   def getMovieInfo(movieName: String):String = {
     val spark = SparkSession
       .builder()
-      .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
+     // .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
+     // .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
       .master("spark://master:7077")
      // .master("spark://master:7077")
       .appName("ReadCsvTest3")
@@ -51,11 +52,7 @@ object ReadCsvTest {
     var n:Int=0
     val count = filter_rdd.count()
     var unit: Unit = filter_rdd.foreach(i => {
-      //      println(i)
-      i
-//      list += i.get(2).toString
-//      println("测试")
-//      println(temp)
+
       maps+=(i.get(1).toString
         .replace(","," ")
         .replace("("," ")

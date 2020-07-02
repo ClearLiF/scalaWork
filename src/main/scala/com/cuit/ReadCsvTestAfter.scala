@@ -13,10 +13,10 @@ object ReadCsvTestAfter {
       .builder()
 
       .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
-      .master("spark://master:7077")
+      .master("local[2]")
      // .master("spark://master:7077")
       .config("spark.sql.codegen.wholeStage", false)
-      .appName("ReadCsvTest4")
+      .appName("ReadCsvTestAfter")
       .config("spark.sql.codegen.wholeStage", false)
       .config("spark.network.timeout",120)
       .config("spark.dynamicAllocation.enabled",false)

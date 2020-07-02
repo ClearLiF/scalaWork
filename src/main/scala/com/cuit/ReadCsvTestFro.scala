@@ -12,9 +12,9 @@ object ReadCsvTestFro {
     val spark = SparkSession
       .builder()
       .config("spark.jars","D:\\IDEAWorkSpace2\\scalaWork\\target\\scalaWork-1.0-SNAPSHOT.jar")
-      .master("spark://master:7077")
+      .master("local[2]")
      // .master("spark://master:7077")
-      .appName("ReadCsvTest5")
+      .appName("ReadCsvTestFro")
       .config("spark.sql.codegen.wholeStage", false)
       .config("spark.sql.codegen.wholeStage", false)
       .config("spark.network.timeout",120)

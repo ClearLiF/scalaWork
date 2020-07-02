@@ -2000,7 +2000,7 @@
   };
 
   /**
-   * Given element offsets, generate an output similar to getBoundingClientRect
+   * Given element offsets, com.cuit.generate an output similar to getBoundingClientRect
    * @method
    * @memberof Popper.Utils
    * @argument {Object} offsets
